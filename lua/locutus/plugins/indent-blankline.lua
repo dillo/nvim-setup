@@ -5,17 +5,8 @@ return {
   ---@type ibl.config
   opts = {
     indent = {
-      -- char = "▏",
-      -- char = "│",
       char = "┊",
-      -- char = "┆",
-      -- char = "┊",
       -- char = "│",
-      -- char = "▏",
-      -- char = "┆",
-      -- char = "┊",
-      -- char = "│",
-      -- char = "▏",
       highlight = { "NonText" },
     },
     scope = {
