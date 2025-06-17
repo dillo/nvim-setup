@@ -22,6 +22,14 @@ return {
         python = { "isort", "black" },
         ruby = { "rubocop" },
       },
+      formatters = {
+        rubocop = {
+          -- Use project-local rubocop when available
+          prepend_args = function()
+            return { "--autocorrect" } -- Ensure indentation fixes are applied
+          end,
+        }
+      },
       format_on_save = {
         lsp_fallback = true,
         async = false,
