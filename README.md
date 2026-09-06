@@ -140,7 +140,7 @@ extension, which is why the Apple command-line tools must be installed first.
 
 ```sh
 nvim --headless \
-  "+MasonInstall bash-language-server black css-lsp dockerfile-language-server elixir-ls emmet-ls eslint-lsp graphql-language-service-cli html-lsp isort json-lsp lua-language-server prettier prisma-language-server pylint pyright rubocop ruby-lsp stylua svelte-language-server tailwindcss-language-server typescript-language-server" \
+  "+MasonInstall bash-language-server black css-lsp dockerfile-language-server emmet-ls eslint-lsp graphql-language-service-cli html-lsp isort json-lsp lua-language-server prettier prisma-language-server pylint pyright rubocop ruby-lsp stylua svelte-language-server tailwindcss-language-server typescript-language-server" \
   +qa
 ```
 
@@ -154,10 +154,9 @@ The configured tooling covers:
 - Lua
 - Python with Pyright, Black, isort, and Pylint
 - Ruby with Ruby LSP and RuboCop
-- Elixir, provided Erlang and Elixir are installed separately
 
-Only install Erlang/Elixir if needed for Elixir development. Project-specific
-runtimes and dependencies still belong in each project's own setup.
+Project-specific runtimes and dependencies still belong in each project's own
+setup.
 
 ## 7. Finish the first launch
 

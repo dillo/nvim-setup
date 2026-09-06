@@ -33,7 +33,6 @@ return {
 					"bashls",
 					"cssls",
 					"dockerls",
-					"elixirls",
 					"emmet_ls",
 					"eslint",
 					"graphql",

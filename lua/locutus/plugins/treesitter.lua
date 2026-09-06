@@ -37,7 +37,6 @@ return {
         "gitignore",
         "query",
         "vimdoc",
-        "c",
         "ruby",
         "python",
       },
