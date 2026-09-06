@@ -18,6 +18,9 @@ require("lazy").setup({
   spec = {
     { import = "locutus.plugins" },
   },
+  rocks = {
+    enabled = false, -- No configured plugins require LuaRocks.
+  },
   checker = {
     enabled = true,
     notify = false,
@@ -26,4 +29,3 @@ require("lazy").setup({
     notify = false,
   },
 })
-

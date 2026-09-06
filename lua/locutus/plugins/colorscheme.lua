@@ -21,6 +21,11 @@ return {
         sidebars = transparent and "transparent" or "dark",
         floats = transparent and "transparent" or "dark",
       },
+      on_highlights = function(highlights)
+        -- Keep guides close to the background, with a subtly stronger active scope.
+        highlights.QuietIndentGuide = { fg = "#0B2233", nocombine = true }
+        highlights.QuietIndentScope = { fg = "#122B3B", nocombine = true }
+      end,
       on_colors = function(colors)
         colors.bg = bg
         colors.bg_dark = transparent and colors.none or bg_dark

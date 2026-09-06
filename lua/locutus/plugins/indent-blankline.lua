@@ -6,11 +6,13 @@ return {
   opts = {
     indent = {
       char = "┊",
-      -- char = "│",
-      highlight = { "NonText" },
+      highlight = { "QuietIndentGuide" },
     },
     scope = {
       enabled = true,
+      highlight = "QuietIndentScope",
+      show_start = false,
+      show_end = false,
     },
     exclude = {
       filetypes = { "help", "alpha", "lazy" },
@@ -22,4 +24,3 @@ return {
     ibl.setup(opts)
   end,
 }
-

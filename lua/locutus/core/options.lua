@@ -1,5 +1,11 @@
 vim.cmd("let g:netrw_liststyle = 3")
 
+-- This configuration uses Lua plugins and external LSP tools, not remote plugin hosts.
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 local opt = vim.opt
 
 opt.relativenumber = true
@@ -30,6 +36,9 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 
 -- clipboard
 opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+
+-- Preserve buffer-local options, including filetype, in saved sessions.
+opt.sessionoptions:append("localoptions")
 
 -- split windows
 opt.splitright = true -- split vertical window to the right
