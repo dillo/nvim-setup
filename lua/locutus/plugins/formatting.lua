@@ -3,6 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local conform = require("conform")
+    local util = require("conform.util")
 
     conform.setup({
       formatters_by_ft = {
@@ -24,14 +25,16 @@ return {
       },
       formatters = {
         rubocop = {
-          -- Use project-local rubocop when available
-          prepend_args = function()
-            return { "--autocorrect" } -- Ensure indentation fixes are applied
-          end,
-        }
+          command = vim.fn.stdpath("config") .. "/bin/rubocop-project",
+          prepend_args = {
+            vim.fn.expand("~/.asdf/shims/rubocop"),
+            vim.fn.expand("~/.asdf/shims/bundle"),
+          },
+          cwd = util.root_file({ "Gemfile" }),
+        },
       },
       format_on_save = {
-        lsp_fallback = true,
+        lsp_format = "fallback",
         async = false,
         timeout_ms = 1000,
       },
@@ -39,7 +42,7 @@ return {
 
     vim.keymap.set({ "n", "v" }, "<leader>mp", function()
       conform.format({
-        lsp_fallback = true,
+        lsp_format = "fallback",
         async = false,
         timeout_ms = 1000,
       })

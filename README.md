@@ -3,7 +3,8 @@
 Personal Neovim configuration for macOS, managed with
 [lazy.nvim](https://github.com/folke/lazy.nvim). It includes LSP support,
 completion, snippets, formatting, linting, Treesitter, Telescope, diagnostics,
-Git-friendly sessions, and the Tokyo Night color scheme.
+Git signs and hunk actions, Git-friendly sessions, and the Tokyo Night color
+scheme.
 
 The instructions below rebuild the complete editor setup on a new or freshly
 formatted Mac.
@@ -86,9 +87,10 @@ Node.js is needed by the JavaScript, TypeScript, CSS, HTML, JSON, Svelte,
 Tailwind, GraphQL, Prisma, Emmet, Dockerfile, and Bash language servers. Python
 is needed by Pyright, Black, isort, and Pylint.
 
-RuboCop is deliberately launched through the asdf Ruby shim so that each Ruby
-project can select its own Ruby and bundled gems. Install the fallback global
-gems under the selected Ruby:
+RuboCop prefers `bundle exec rubocop` when the current project's bundle is
+complete, ensuring that diagnostics and formatting use the project's locked
+version and extensions. If the project bundle is unavailable, it falls back to
+the asdf RuboCop shim. Install the fallback global gems under the selected Ruby:
 
 ```sh
 gem install bundler rubocop rubocop-performance rubocop-rails
@@ -136,16 +138,16 @@ extension, which is why the Apple command-line tools must be installed first.
 ## 6. Install language servers, formatters, and linters
 
 [Mason](https://github.com/mason-org/mason.nvim) installs editor tooling under
-`~/.local/share/nvim/mason`. Install every tool used by the configuration with:
+`~/.local/share/nvim/mason`. The configuration declares every required language
+server, formatter, and linter, so they are installed automatically when Neovim
+starts. Open Neovim and allow Mason to finish any pending installations:
 
 ```sh
-nvim --headless \
-  "+MasonInstall bash-language-server black css-lsp dockerfile-language-server emmet-ls eslint-lsp graphql-language-service-cli html-lsp isort json-lsp lua-language-server prettier prisma-language-server pylint pyright rubocop ruby-lsp stylua svelte-language-server tailwindcss-language-server typescript-language-server" \
-  +qa
+nvim
 ```
 
 Ruby must already be installed and selected through asdf before running this
-command. Mason's Ruby launchers are created using the active Ruby interpreter.
+step. Mason's Ruby launchers are created using the active Ruby interpreter.
 
 The configured tooling covers:
 
@@ -189,6 +191,10 @@ Use these commands inside Neovim when checking the installation:
 Open a source file and confirm that completion appears in insert mode. Use
 `Space d` to show diagnostics on the current line, `[d` and `]d` to move between
 diagnostics, and `Space x d` to list all diagnostics in the current file.
+
+In a Git-tracked file, use `[c` and `]c` to move between changed hunks. The
+`Space g` mappings preview, stage, reset, blame, and diff changes; use `ih` in
+operator-pending or visual mode to select the current hunk.
 
 ## Updating
 

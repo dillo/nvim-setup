@@ -3,31 +3,42 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
-			{
-				"williamboman/mason.nvim",
-				"williamboman/mason-lspconfig.nvim", -- Add mason-lspconfig
-				"folke/lazydev.nvim",
-				ft = "lua", -- only load on lua files
-				opts = {
-					library = {
-						-- See the configuration section for more details
-						-- Load luvit types when the `vim.uv` word is found
-						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-					},
-				},
-			},
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		config = function()
 			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
+			local mason_tool_installer = require("mason-tool-installer")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local rubocop_launcher = vim.fn.stdpath("config") .. "/bin/rubocop-project"
+			local rubocop_fallback = vim.fn.expand("~/.asdf/shims/rubocop")
+			local bundler = vim.fn.expand("~/.asdf/shims/bundle")
 
 			-- Include completion capabilities for servers automatically enabled by Mason.
 			vim.lsp.config("*", { capabilities = capabilities })
 
 			mason.setup()
 			mason_lspconfig.setup({
-				ensure_installed = { "lua_ls", "ruby_lsp", "rubocop" },
+				ensure_installed = {
+					"bashls",
+					"cssls",
+					"dockerls",
+					"emmet_ls",
+					"eslint",
+					"graphql",
+					"html",
+					"jsonls",
+					"lua_ls",
+					"prismals",
+					"pyright",
+					"ruby_lsp",
+					"rubocop",
+					"svelte",
+					"tailwindcss",
+					"ts_ls",
+				},
 				-- Keep server activation explicit, independent of installed Mason tools.
 				automatic_enable = {
 					"bashls",
@@ -45,36 +56,56 @@ return {
 					"ts_ls",
 				},
 			})
+			mason_tool_installer.setup({
+				ensure_installed = {
+					"black",
+					"isort",
+					"prettier",
+					"pylint",
+					"stylua",
+				},
+				run_on_start = true,
+				start_delay = 3000,
+				debounce_hours = 24,
+			})
 
 			vim.lsp.config("lua_ls", { capabilities = capabilities })
 
 			-- Enhanced Ruby LSP configuration
 			vim.lsp.config("ruby_lsp", {
 				capabilities = capabilities,
-				settings = {
-					ruby = {
-						useBundler = true, -- Use bundler for gem management
-						formatter = "auto", -- Use project's formatter
-					},
+				-- Nested Rails engines may have a Gemfile but share the root lockfile.
+				root_markers = { "Gemfile.lock", ".git" },
+				init_options = {
+					-- Conform and the dedicated RuboCop LSP own these responsibilities.
+					formatter = "none",
+					linters = {},
 				},
 			})
 
 			vim.lsp.config("rubocop", {
 				capabilities = capabilities,
-				-- Mason's RuboCop launcher is tied to an old Ruby installation.
-				-- Let asdf select the correct Ruby and gem set for each project.
-				cmd = { vim.fn.expand("~/.asdf/shims/rubocop"), "--lsp" },
+				cmd = function(dispatchers, config)
+					return vim.lsp.rpc.start(
+						{ rubocop_launcher, rubocop_fallback, bundler, "--lsp" },
+						dispatchers,
+						config and config.root_dir and { cwd = config.root_dir }
+					)
+				end,
 				root_markers = { ".rubocop.yml", "Gemfile", ".git" },
-				settings = {
-					rubocop = {
-						useBundler = true,
-						autoCorrect = false, -- Let conform handle the formatting
-						formatOnSave = false, -- Let conform handle the formatting
-					},
-				},
 			})
 
 			vim.lsp.enable({ "lua_ls", "ruby_lsp", "rubocop" })
 		end,
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				-- Load luvit types when the `vim.uv` word is found.
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
 	},
 }
