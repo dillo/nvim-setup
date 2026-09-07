@@ -22,6 +22,8 @@ return {
         lua = { "stylua" },
         python = { "ruff_organize_imports", "ruff_format" },
         ruby = { "rubocop" },
+        -- htmlbeautifier understands embedded Ruby; matches the VS Code Ruby profile.
+        eruby = { "htmlbeautifier" },
       },
       formatters = {
         rubocop = {

@@ -28,6 +28,7 @@ return {
 					"emmet_ls",
 					"eslint",
 					"graphql",
+					"herb_ls",
 					"html",
 					"jsonls",
 					"lua_ls",
@@ -48,6 +49,7 @@ return {
 					"emmet_ls",
 					"eslint",
 					"graphql",
+					"herb_ls", -- HTML+ERB diagnostics for Rails views.
 					"html",
 					"jsonls",
 					"prismals",
@@ -87,6 +89,13 @@ return {
 					pyright = { disableOrganizeImports = true },
 					python = { analysis = { typeCheckingMode = "standard" } },
 				},
+			})
+
+			-- Herb ships filetypes { "html", "eruby" }. Restrict it to eruby so it
+			-- does not overlap with the dedicated HTML language server.
+			vim.lsp.config("herb_ls", {
+				capabilities = capabilities,
+				filetypes = { "eruby" },
 			})
 
 			-- Enhanced Ruby LSP configuration

@@ -2,6 +2,7 @@ local parsers = {
   "bash",
   "css",
   "dockerfile",
+  "embedded_template", -- ERB / .html.erb
   "gitignore",
   "graphql",
   "html",
