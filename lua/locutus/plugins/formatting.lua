@@ -20,7 +20,7 @@ return {
         graphql = { "prettier" },
         liquid = { "prettier" },
         lua = { "stylua" },
-        python = { "isort", "black" },
+        python = { "ruff_organize_imports", "ruff_format" },
         ruby = { "rubocop" },
       },
       formatters = {

@@ -4,10 +4,9 @@ return {
 	config = function()
 		local lint = require("lint")
 
-		-- ESLint and RuboCop diagnostics are provided by their language servers.
-		lint.linters_by_ft = {
-			python = { "pylint" },
-		}
+		-- ESLint, RuboCop, and Ruff diagnostics are provided by their language
+		-- servers. This table stays available for linters that lack one.
+		lint.linters_by_ft = {}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 

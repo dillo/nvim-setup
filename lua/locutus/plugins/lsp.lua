@@ -33,6 +33,7 @@ return {
 					"lua_ls",
 					"prismals",
 					"pyright",
+					"ruff",
 					"ruby_lsp",
 					"rubocop",
 					"svelte",
@@ -50,7 +51,8 @@ return {
 					"html",
 					"jsonls",
 					"prismals",
-					"pyright", -- Use one Python language server.
+					"pyright", -- Types and completion only; see the ruff config below.
+					"ruff", -- Linting, import sorting, and formatting for Python.
 					"svelte",
 					"tailwindcss",
 					"ts_ls",
@@ -58,10 +60,7 @@ return {
 			})
 			mason_tool_installer.setup({
 				ensure_installed = {
-					"black",
-					"isort",
 					"prettier",
-					"pylint",
 					"stylua",
 				},
 				run_on_start = true,
@@ -70,6 +69,25 @@ return {
 			})
 
 			vim.lsp.config("lua_ls", { capabilities = capabilities })
+
+			-- Ruff owns linting, import sorting, and formatting; Pyright owns types
+			-- and hover. Disabling Ruff's hover prevents duplicate popups.
+			vim.lsp.config("ruff", {
+				capabilities = capabilities,
+				on_attach = function(client)
+					client.server_capabilities.hoverProvider = false
+				end,
+			})
+
+			-- Defer to Ruff for import organisation so the two servers do not
+			-- both offer the same code action.
+			vim.lsp.config("pyright", {
+				capabilities = capabilities,
+				settings = {
+					pyright = { disableOrganizeImports = true },
+					python = { analysis = { typeCheckingMode = "standard" } },
+				},
+			})
 
 			-- Enhanced Ruby LSP configuration
 			vim.lsp.config("ruby_lsp", {
