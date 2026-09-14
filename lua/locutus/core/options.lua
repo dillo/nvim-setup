@@ -17,7 +17,9 @@ opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spces
 opt.autoindent = true -- copy indent from current line when starting new one
 
-opt.wrap = false
+opt.wrap = true
+opt.linebreak = true -- wrap at word boundaries
+opt.breakindent = true -- preserve indentation on wrapped rows
 opt.list = true
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
