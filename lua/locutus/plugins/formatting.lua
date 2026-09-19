@@ -24,6 +24,10 @@ return {
         ruby = { "rubocop" },
         -- htmlbeautifier understands embedded Ruby; matches the VS Code Ruby profile.
         eruby = { "htmlbeautifier" },
+        -- mix format picks up .formatter.exs, including Phoenix.LiveView.HTMLFormatter.
+        elixir = { "mix" },
+        heex = { "mix" },
+        eex = { "mix" },
       },
       formatters = {
         rubocop = {

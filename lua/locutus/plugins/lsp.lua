@@ -26,6 +26,7 @@ return {
 					"cssls",
 					"dockerls",
 					"emmet_ls",
+					"elixirls",
 					"eslint",
 					"graphql",
 					"herb_ls",
@@ -46,6 +47,7 @@ return {
 					"bashls",
 					"cssls",
 					"dockerls",
+					"elixirls", -- Elixir, HEEx, and EEx; matches the VS Code Elixir profile.
 					"emmet_ls",
 					"eslint",
 					"graphql",
@@ -96,6 +98,34 @@ return {
 			vim.lsp.config("herb_ls", {
 				capabilities = capabilities,
 				filetypes = { "eruby" },
+			})
+
+			-- ElixirLS ships no default cmd in lspconfig; Mason puts elixir-ls on PATH.
+			-- mix format (via conform) owns formatting, so dialyzer stays on for types.
+			vim.lsp.config("elixirls", {
+				capabilities = capabilities,
+				cmd = { "elixir-ls" },
+				settings = {
+					elixirLS = {
+						dialyzerEnabled = true,
+						fetchDeps = false,
+						suggestSpecs = true,
+					},
+				},
+			})
+
+			-- Tailwind and Emmet in Phoenix templates.
+			vim.lsp.config("tailwindcss", {
+				capabilities = capabilities,
+				init_options = { userLanguages = { heex = "html", elixir = "html" } },
+			})
+
+			vim.lsp.config("emmet_ls", {
+				capabilities = capabilities,
+				filetypes = vim.list_extend(
+					vim.deepcopy(vim.lsp.config.emmet_ls.filetypes or {}),
+					{ "heex", "eex" }
+				),
 			})
 
 			-- Enhanced Ruby LSP configuration

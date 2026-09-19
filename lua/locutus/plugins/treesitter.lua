@@ -2,9 +2,12 @@ local parsers = {
   "bash",
   "css",
   "dockerfile",
+  "eex",
+  "elixir",
   "embedded_template", -- ERB / .html.erb
   "gitignore",
   "graphql",
+  "heex",
   "html",
   "javascript",
   "json",
