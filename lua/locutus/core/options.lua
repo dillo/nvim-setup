@@ -30,7 +30,7 @@ opt.inccommand = "split"
 
 opt.cursorline = true
 
--- turn on termguicolors for tokyonight colorscheme to work
+-- turn on termguicolors for the colorscheme to work
 -- (have to use iterm2 or any other true color terminal)
 opt.termguicolors = true
 opt.background = "dark"
