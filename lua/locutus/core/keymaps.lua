@@ -8,6 +8,7 @@ keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 keymap.set({ "n", "i", "v", "c", "t" }, "<C-z>", "<Nop>", { desc = "Disable Ctrl-Z suspension" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 
 keymap.set("n", "<leader>d", function()
 	vim.diagnostic.open_float({ scope = "line" })
